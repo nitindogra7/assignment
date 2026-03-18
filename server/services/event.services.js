@@ -1,8 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import dotenv from "dotenv";
+dotenv.config();
 
-const genAI = new GoogleGenerativeAI(
-  "AQ.Ab8RN6LNuwjTT7ZRI0Pc3RABOBCOJUcFwD37eSvuXuiIZTxVAw",
-);
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_KEY);
 
 export async function generateEvent(prompt) {
   const model = genAI.getGenerativeModel({
