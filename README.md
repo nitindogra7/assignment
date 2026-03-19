@@ -278,11 +278,14 @@ Generates an event venue recommendation based on a user prompt.
 *   **Method:** `POST`
 *   **Request Body:**
     
+    
     {
       "prompt": "I need a venue for a 2-day wedding reception for 200 guests in Delhi, budget around 5 lakhs, with catering and decor included."
     }
     
+    
 *   **Response (Success - 200 OK):**
+    
     
     {
       "name": "The Grand Imperial",
@@ -298,19 +301,22 @@ Generates an event venue recommendation based on a user prompt.
       "description": "The Grand Imperial in Delhi is an exquisite choice for your 2-day wedding reception, perfectly accommodating 200 guests within your 5 lakh budget. This opulent venue boasts a magnificent ballroom, ideal for grand celebrations, alongside ample parking facilities for all your attendees. The package includes comprehensive catering services, offering a diverse menu that can be customized to suit your preferences and cultural requirements. Furthermore, the venue provides elegant decor services, ensuring a breathtaking ambiance that aligns with your wedding theme. For guests traveling from afar, comfortable accommodation options are available, making it a convenient and luxurious choice for a memorable event. The location in Delhi offers excellent connectivity, making it easily accessible for local and out-of-town guests. The dedicated event management team at The Grand Imperial will work closely with you to ensure every detail is meticulously planned and executed, from the seating arrangements to the lighting and floral decorations. Their expertise guarantees a seamless and stress-free experience, allowing you to fully enjoy your special day. The venue's reputation for exceptional service and its ability to host large-scale events with grace and efficiency make it a top contender for your wedding reception. The spacious interiors and sophisticated design provide a perfect backdrop for wedding photography, capturing every precious moment. Choosing The Grand Imperial ensures a truly grand and unforgettable start to your married life."
     }
     
+    
 *   **Response (Error - 400 Bad Request):**
+    
     
     {
       "error": "Please write more than 40 characters and include budget, days, location and people"
     }
     
+    
 *   **Response (Error - 500 Internal Server Error):**
+    
     
     {
       "error": "Failed to generate event"
     }
     
-
 ## 🤝 Contributing
 
 We welcome contributions to Louder! If you're interested in improving the project, please follow these guidelines:
