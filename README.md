@@ -252,11 +252,11 @@ To deploy Louder to a production environment:
     bash
     npm run build
     
-    
+
     This will create a `dist/` directory containing the optimized production build of your React app.
 
 2.  **Configure Vercel (for client):**
-    If deploying the client to Vercel, ensure the `client/vercel.json` file is present. This file configures Vercel to correctly route all requests to `index.html`, which is essential for single-page applications.
+    If deploying the client to Vercel, ensure the `client/vercel.json` file is present. This file configures Vercel to correctly handle client-side routing by redirecting all non-API requests to `index.html` and to proxy API requests (e.g., `/api/*`) to your backend.
 
 3.  **Serve Static Files:**
     Configure your Node.js server (or a web server like Nginx/Apache) to serve the static files from the `client/dist` directory. You might need to add middleware to your Express server to serve static assets.
@@ -268,7 +268,7 @@ To deploy Louder to a production environment:
     bash
     node server.js
     
-    
+
     For continuous operation, consider using process managers like PM2 or deploying to cloud platforms like Heroku, Vercel (for client), or AWS/GCP/Azure (for server and database).
 
 ## 📞 API Documentation
