@@ -34,11 +34,12 @@ Louder is a full-stack application designed to revolutionize event planning by l
     *   `amenities`: Array of strings (e.g., "WiFi", "Pool")
     *   `images`: Exactly two Unsplash-style image URLs
     *   `description`: Detailed description of why the venue fits the requirements (minimum 250 words).
-*   **Input Validation:** Basic server-side validation ensures prompts are descriptive enough for the AI.
+*   **Enhanced Input Validation:** Client-side validation ensures prompts are descriptive enough (minimum 40 characters, suggesting location, budget, people), complemented by basic server-side validation.
 *   **Client-Side Interface:** A modern, responsive user interface built with React and TailwindCSS, featuring:
     *   Dynamic loading indicators for AI generation and history fetching.
-    *   Interactive example prompts to guide user input.
-    *   Persistent event history with dynamic routing for easy access to past recommendations.
+    *   Interactive welcome screen with curated example prompts to guide user input.
+    *   Persistent event history with dynamic routing for easy access to past recommendations and automatic refresh.
+    *   Dynamic routing for individual event recommendations, allowing direct access via URL (e.g., `/event-id`).
     *   Collapsible sidebar for history on mobile devices.
 *   **Robust Error Handling:** Includes mechanisms to catch and report errors from the AI model or invalid responses.
 ## 🛠️ Tech Stack
@@ -218,10 +219,11 @@ Before you begin, ensure you have the following installed:
 ### Interacting with the UI
 
 1.  Open your web browser and navigate to the client URL (e.g., `http://localhost:5173`).
-2.  You will see an input field where you can describe your event.
-3.  Enter a detailed prompt, including budget, number of people, desired location, and event duration.
-    *   **Example Prompt:** "I want to plan a 3-day corporate retreat for 100 employees in Bangalore with a budget of 3 lakhs. We need a conference hall, good food, and recreational activities like a pool."
-4.  Submit the prompt. The AI-generated event venue recommendation will be displayed on the screen.
+2.  You will be greeted with a welcome screen featuring example prompts.
+3.  Enter a detailed prompt in the input field, including location, budget, number of people, and event duration. The system requires prompts to be at least 40 characters long.
+    *   **Example Prompt:** "Plan a Goa offsite corporate for 20 people under ₹40k"
+4.  Submit the prompt. The AI-generated event venue recommendation will be displayed, and the URL will update to reflect the specific event ID, allowing direct access or sharing.
+5.  Previously generated events will appear in the history sidebar, which updates automatically. Click on any history item to view its details.
 
 ## 🧑‍💻 Development
 
@@ -275,53 +277,150 @@ To deploy Louder to a production environment:
 
 ## 📞 API Documentation
 
-The backend exposes a single primary API endpoint for event generation.
+The backend exposes several API endpoints for event management and history.
 
-### `POST /api/event/generate`
+### `GET /`
+
+A simple health check endpoint to confirm the API is running.
+
+*   **URL:** `/`
+*   **Method:** `GET`
+*   **Response (Success - 200 OK):**
+    
+    API running...
+    
+
+### `POST /api/event`
 
 Generates an event venue recommendation based on a user prompt.
 
-*   **URL:** `/api/event/generate`
+*   **URL:** `/api/event`
 *   **Method:** `POST`
 *   **Request Body:**
-    
+
     
     {
       "prompt": "I need a venue for a 2-day wedding reception for 200 guests in Delhi, budget around 5 lakhs, with catering and decor included."
     }
     
-    
 *   **Response (Success - 200 OK):**
-    
+
     
     {
-      "name": "The Grand Imperial",
-      "location": "Delhi, India",
-      "cost": 500000,
-      "perPerson": 2500,
-      "days": 2,
-      "amenities": ["Catering", "Decor", "Ballroom", "Parking", "Accommodation"],
-      "images": [
-        "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
-        "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
-      ],
-      "description": "The Grand Imperial in Delhi is an exquisite choice for your 2-day wedding reception, perfectly accommodating 200 guests within your 5 lakh budget. This opulent venue boasts a magnificent ballroom, ideal for grand celebrations, alongside ample parking facilities for all your attendees. The package includes comprehensive catering services, offering a diverse menu that can be customized to suit your preferences and cultural requirements. Furthermore, the venue provides elegant decor services, ensuring a breathtaking ambiance that aligns with your wedding theme. For guests traveling from afar, comfortable accommodation options are available, making it a convenient and luxurious choice for a memorable event. The location in Delhi offers excellent connectivity, making it easily accessible for local and out-of-town guests. The dedicated event management team at The Grand Imperial will work closely with you to ensure every detail is meticulously planned and executed, from the seating arrangements to the lighting and floral decorations. Their expertise guarantees a seamless and stress-free experience, allowing you to fully enjoy your special day. The venue's reputation for exceptional service and its ability to host large-scale events with grace and efficiency make it a top contender for your wedding reception. The spacious interiors and sophisticated design provide a perfect backdrop for wedding photography, capturing every precious moment. Choosing The Grand Imperial ensures a truly grand and unforgettable start to your married life."
+      "success": true,
+      "data": {
+        "_id": "65e7e0e7a2b3c4d5e6f7a8b9",
+        "name": "The Grand Imperial",
+        "location": "Delhi, India",
+        "cost": 500000,
+        "perPerson": 2500,
+        "days": 2,
+        "amenities": ["Catering", "Decor", "Ballroom", "Parking", "Accommodation"],
+        "images": [
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+        ],
+        "description": "The Grand Imperial in Delhi is an exquisite choice for your 2-day wedding reception, perfectly accommodating 200 guests within your 5 lakh budget. This opulent venue boasts a magnificent ballroom, ideal for grand celebrations, alongside ample parking facilities for all your attendees. The package includes comprehensive catering services, offering a diverse menu that can be customized to suit your preferences and cultural requirements. Furthermore, the venue provides elegant decor services, ensuring a breathtaking ambiance that aligns with your wedding theme. For guests traveling from afar, comfortable accommodation options are available, making it a convenient and luxurious choice for a memorable event. The location in Delhi offers excellent connectivity, making it easily accessible for local and out-of-town guests. The dedicated event management team at The Grand Imperial will work closely with you to ensure every detail is meticulously planned and executed, from the seating arrangements to the lighting and floral decorations. Their expertise guarantees a seamless and stress-free experience, allowing you to fully enjoy your special day. The venue's reputation for exceptional service and its ability to host large-scale events with grace and efficiency make it a top contender for your wedding reception. The spacious interiors and sophisticated design provide a perfect backdrop for wedding photography, capturing every precious moment. Choosing The Grand Imperial ensures a truly grand and unforgettable start to your married life.",
+        "createdAt": "2024-03-05T12:00:00.000Z",
+        "updatedAt": "2024-03-05T12:00:00.000Z",
+        "__v": 0
+      }
     }
-    
     
 *   **Response (Error - 400 Bad Request):**
-    
+
     
     {
-      "error": "Please write more than 40 characters and include budget, days, location and people"
+      "success": false,
+      "message": "Please write more than 40 characters and include budget, days, location and people"
     }
     
+*   **Response (Error - 500 Internal Server Error):**
+
+    
+    {
+      "success": false,
+      "message": "Failed to generate event"
+    }
+    
+
+### `GET /api/event/:id`
+
+Retrieves details for a specific event by its ID.
+
+*   **URL:** `/api/event/:id`
+*   **Method:** `GET`
+*   **URL Parameters:**
+    *   `id`: The unique identifier of the event.
+*   **Response (Success - 200 OK):**
+    
+    {
+      "success": true,
+      "data": {
+        "_id": "65e7e0e7a2b3c4d5e6f7a8b9",
+        "name": "The Grand Imperial",
+        "location": "Delhi, India",
+        "cost": 500000,
+        "perPerson": 2500,
+        "days": 2,
+        "amenities": ["Catering", "Decor", "Ballroom", "Parking", "Accommodation"],
+        "images": [
+          "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+          "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee"
+        ],
+        "description": "The Grand Imperial in Delhi is an exquisite choice for your 2-day wedding reception...",
+        "createdAt": "2024-03-05T12:00:00.000Z",
+        "updatedAt": "2024-03-05T12:00:00.000Z",
+        "__v": 0
+      }
+    }
+    
+*   **Response (Error - 404 Not Found):**
+    
+    {
+      "success": false,
+      "message": "Event not found"
+    }
     
 *   **Response (Error - 500 Internal Server Error):**
     
+    {
+      "success": false,
+      "message": "Server error"
+    }
+    
+
+### `GET /api/history`
+
+Retrieves a list of all previously generated events (history).
+
+*   **URL:** `/api/history`
+*   **Method:** `GET`
+*   **Response (Success - 200 OK):**
     
     {
-      "error": "Failed to generate event"
+      "success": true,
+      "data": [
+        {
+          "_id": "65e7e0e7a2b3c4d5e6f7a8b9",
+          "name": "The Grand Imperial",
+          "location": "Delhi, India",
+          "createdAt": "2024-03-05T12:00:00.000Z"
+        },
+        {
+          "_id": "65e7e0e7a2b3c4d5e6f7a8c0",
+          "name": "Beach Team Retreat",
+          "location": "Goa, India",
+          "createdAt": "2024-03-04T10:00:00.000Z"
+        }
+      ]
+    }
+    
+*   **Response (Error - 500 Internal Server Error):**
+    
+    {
+      "success": false,
+      "message": "Failed to fetch history"
     }
     
 ## 🤝 Contributing
