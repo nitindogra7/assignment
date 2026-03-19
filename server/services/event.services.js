@@ -22,7 +22,7 @@ STRICT RULES:
 - Return ONLY valid JSON
 - Do NOT use markdown or explanation
 - Use realistic worldwide locations and that country pricing currency with currency sign
-- Always return exactly 2 image URLs (Unsplash style)
+- Always return exactly 2 image URLs of that location
 - cost, perPerson, days must be numbers
 - amenities must be an array of strings
 - only one description with minimum words of 500
