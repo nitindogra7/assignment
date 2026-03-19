@@ -12,7 +12,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: ["assignment-nu-nine-76.vercel.app"],
+    origin: ["https://assignment-nu-nine-76.vercel.app"],
     credentials: true,
   }),
 );
