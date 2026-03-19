@@ -5,7 +5,7 @@ import Loading from "./laoding";
 export default function History({ open, setOpen, items, loading }) {
   return (
     <aside
-      className={`fixed md:relative z-50 top-0 left-0 h-full w-64 bg-secondary/95 border-r overflow-scroll border-white/10 p-5 transition-transform duration-300
+      className={`fixed md:relative z-50 top-0 left-0 h-dvh w-64 bg-secondary/95 border-r border-white/10 p-5 transition-transform duration-300 flex flex-col
       ${open ? "translate-x-0" : "-translate-x-full"} md:translate-x-0`}
     >
       <div className="flex items-center justify-between mb-5 md:hidden">
@@ -26,13 +26,15 @@ export default function History({ open, setOpen, items, loading }) {
         </button>
       </Link>
 
-      <div className="space-y-3 text-sm">
+      <div className="flex-1 overflow-y-auto space-y-2 pr-1 text-sm">
         {loading ? (
           <Loading text="Loading..." />
+        ) : items.length === 0 ? (
+          <p className="text-gray-500 text-xs">No chats yet</p>
         ) : (
           items.map((item) => (
-            <Link to={`/${item.id}`} className="m-1" key={item.id}>
-              <div className="p-3 rounded-lg bg-white/5 hover:bg-white/10 transition cursor-pointer">
+            <Link to={`/${item.id}`} key={item.id}>
+              <div className="p-3 rounded-lg bg-white/5 my-2 hover:bg-white/10 transition cursor-pointer truncate">
                 {item.title}
               </div>
             </Link>
