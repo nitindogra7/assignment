@@ -3,7 +3,7 @@ import { Event } from "../model/event.module.js";
 
 export const eventController = async (req, res) => {
   try {
-    const {prompt} = req.body
+    const { prompt } = req.body;
 
     if (!prompt) {
       return res.status(400).json({
@@ -12,7 +12,7 @@ export const eventController = async (req, res) => {
       });
     }
 
-    const response = await safeGenerateEvent(prompt); 
+    const response = await safeGenerateEvent(prompt);
     if (response.error) {
       return res.status(400).json({
         success: false,

@@ -21,7 +21,7 @@ Your task is to convert the user request into structured JSON for a venue recomm
 STRICT RULES:
 - Return ONLY valid JSON
 - Do NOT use markdown or explanation
-- Use realistic Indian locations and INR pricing
+- Use realistic worldwide locations and that country pricing currency with currency sign
 - Always return exactly 2 image URLs (Unsplash style)
 - cost, perPerson, days must be numbers
 - amenities must be an array of strings
