@@ -145,39 +145,39 @@ Before you begin, ensure you have the following installed:
 
 1.  **Clone the repository:**
 
-    ```bash
+    bash
     git clone https://github.com/nitindogra7/assignment.git
     cd assignment
-    ```
+    
 
 2.  **Install Server Dependencies:**
 
-    ```bash
+    bash
     cd server
     npm install
-    ```
+    
 
 3.  **Install Client Dependencies:**
 
-    ```bash
+    bash
     cd ../client
     npm install
-    ```
+    
 
 ### Configuration
 
 1.  **Create `.env` file for the server:**
     Navigate to the `server/` directory and create a file named `.env`.
 
-    ```bash
+    bash
     cd ../server
     touch .env
-    ```
+    
 
 2.  **Add environment variables:**
     Populate the `.env` file with your configuration details:
 
-    ```env
+    env
     # Server Port
     PORT=5000
 
@@ -188,7 +188,7 @@ Before you begin, ensure you have the following installed:
 
     # Google Gemini API Key
     GEMINI_KEY=your_google_gemini_api_key
-    ```
+    
     Replace `your_mongodb_connection_string` and `your_google_gemini_api_key` with your actual values.
 
 ## 🚀 Usage
@@ -198,19 +198,19 @@ Before you begin, ensure you have the following installed:
 1.  **Start the Server:**
     From the `server/` directory:
 
-    ```bash
+    bash
     npm run dev
     # Or if you don't have nodemon installed globally:
     # npx nodemon server.js
-    ```
+    
     The server will start on the port specified in your `.env` file (default: `5000`).
 
 2.  **Start the Client:**
     From the `client/` directory:
 
-    ```bash
+    bash
     npm run dev
-    ```
+    
     The client application will open in your browser, typically at `http://localhost:5173`.
 
 ### Interacting with the UI
@@ -249,9 +249,9 @@ To deploy Louder to a production environment:
 1.  **Build the Client:**
     In the `client/` directory:
 
-    ```bash
+    bash
     npm run build
-    ```
+    
     This will create a `dist/` directory containing the optimized production build of your React app.
 
 2.  **Serve Static Files:**
@@ -261,9 +261,9 @@ To deploy Louder to a production environment:
     Ensure your `.env` variables are correctly set for the production environment.
     In the `server/` directory:
 
-    ```bash
+    bash
     node server.js
-    ```
+    
     For continuous operation, consider using process managers like PM2 or deploying to cloud platforms like Heroku, Vercel (for client), or AWS/GCP/Azure (for server and database).
 
 ## 📞 API Documentation
@@ -277,13 +277,13 @@ Generates an event venue recommendation based on a user prompt.
 *   **URL:** `/api/event/generate`
 *   **Method:** `POST`
 *   **Request Body:**
-    ```json
+    
     {
       "prompt": "I need a venue for a 2-day wedding reception for 200 guests in Delhi, budget around 5 lakhs, with catering and decor included."
     }
-    ```
+    
 *   **Response (Success - 200 OK):**
-    ```json
+    
     {
       "name": "The Grand Imperial",
       "location": "Delhi, India",
@@ -297,19 +297,19 @@ Generates an event venue recommendation based on a user prompt.
       ],
       "description": "The Grand Imperial in Delhi is an exquisite choice for your 2-day wedding reception, perfectly accommodating 200 guests within your 5 lakh budget. This opulent venue boasts a magnificent ballroom, ideal for grand celebrations, alongside ample parking facilities for all your attendees. The package includes comprehensive catering services, offering a diverse menu that can be customized to suit your preferences and cultural requirements. Furthermore, the venue provides elegant decor services, ensuring a breathtaking ambiance that aligns with your wedding theme. For guests traveling from afar, comfortable accommodation options are available, making it a convenient and luxurious choice for a memorable event. The location in Delhi offers excellent connectivity, making it easily accessible for local and out-of-town guests. The dedicated event management team at The Grand Imperial will work closely with you to ensure every detail is meticulously planned and executed, from the seating arrangements to the lighting and floral decorations. Their expertise guarantees a seamless and stress-free experience, allowing you to fully enjoy your special day. The venue's reputation for exceptional service and its ability to host large-scale events with grace and efficiency make it a top contender for your wedding reception. The spacious interiors and sophisticated design provide a perfect backdrop for wedding photography, capturing every precious moment. Choosing The Grand Imperial ensures a truly grand and unforgettable start to your married life."
     }
-    ```
+    
 *   **Response (Error - 400 Bad Request):**
-    ```json
+    
     {
       "error": "Please write more than 40 characters and include budget, days, location and people"
     }
-    ```
+    
 *   **Response (Error - 500 Internal Server Error):**
-    ```json
+    
     {
       "error": "Failed to generate event"
     }
-    ```
+    
 
 ## 🤝 Contributing
 
