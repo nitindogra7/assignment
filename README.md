@@ -33,7 +33,7 @@ Louder is a full-stack application designed to revolutionize event planning by l
     *   `days`: Number of days for the event (number)
     *   `amenities`: Array of strings (e.g., "WiFi", "Pool")
     *   `images`: Exactly two Unsplash-style image URLs
-    *   `description`: Detailed description of why the venue fits the requirements (minimum 500 words).
+    *   `description`: Detailed description of why the venue fits the requirements (minimum 250 words).
 *   **Input Validation:** Basic server-side validation ensures prompts are descriptive enough for the AI.
 *   **Client-Side Interface:** A modern, responsive user interface built with React and TailwindCSS, featuring:
     *   Dynamic loading indicators for AI generation and history fetching.
