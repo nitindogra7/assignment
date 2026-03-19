@@ -13,6 +13,7 @@ export default function Dashboard() {
   const [historyItems, setHistoryItems] = useState([]);
   const [loading, setLoading] = useState(false);
   const [historyLoading, setHistoryLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
   const { id } = useParams();
@@ -35,6 +36,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!id) return setResponse(null);
+
     async function fetchData() {
       try {
         setLoading(true);
@@ -46,6 +48,7 @@ export default function Dashboard() {
         setLoading(false);
       }
     }
+
     fetchData();
   }, [id]);
 
@@ -55,15 +58,23 @@ export default function Dashboard() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    if (!prompt.trim()) return;
+    if (prompt.trim().length < 40) {
+      setError(true);
+      return;
+    }
+
+    setError(false);
 
     setLoading(true);
     try {
       const res = await api.post("/api/event", { prompt });
       const data = res.data.data;
+
       setResponse(data);
       setPrompt("");
+
       fetchHistory();
+
       navigate(`/${data._id}`);
     } catch (err) {
       console.error(err);
@@ -153,7 +164,10 @@ export default function Dashboard() {
                       ].map((example, i) => (
                         <button
                           key={i}
-                          onClick={() => setPrompt(example)}
+                          onClick={() => {
+                            setPrompt(example);
+                            setError(false);
+                          }}
                           className="text-left px-3 py-2 text-xs sm:text-sm bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition backdrop-blur-xl"
                         >
                           {example}
@@ -168,17 +182,31 @@ export default function Dashboard() {
             )}
           </div>
 
+          <div className="max-w-3xl mx-auto px-4 mb-1">
+            {error ? (
+              <p className="text-xs text-red-400">
+                Prompt should include location, budget, people & be 40+
+                characters
+              </p>
+            ) : (
+              <p className="text-xs text-gray-400">
+                Example: Plan a Goa offsite corporate for 20 people under ₹40k
+              </p>
+            )}
+          </div>
           <div className="shrink-0 border-t border-white/10 bg-secondary/80 px-3 sm:px-6 md:px-10 py-3">
             <form
               onSubmit={handleSubmit}
               className="max-w-3xl mx-auto flex items-center gap-3 bg-white/5 border border-white/10 rounded-lg px-4 py-3 focus-within:ring-1 focus-within:ring-accent"
             >
               <input
+                onClick={() => setError(false)}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder="Describe your event..."
                 className="flex-1 bg-transparent outline-none text-sm placeholder-gray-500"
               />
+
               <button className="px-4 py-2 rounded-md bg-accent text-white text-sm hover:opacity-90 transition">
                 Generate
               </button>
