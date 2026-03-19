@@ -21,8 +21,7 @@ Louder is a full-stack application designed to revolutionize event planning by l
 
 **Target Audience:** Event organizers, wedding planners, corporate event managers, or anyone looking to plan an event efficiently.
 
-**Current Status:** This project is currently in an early development phase (v0.0.0), demonstrating core AI integration and basic client-server functionality.
-
+**Current Status:** This project is actively being developed, featuring an enhanced user interface with interactive elements, dynamic loading states, and persistent event history. It demonstrates a robust client-server interaction for AI-powered event planning.
 ## ✨ Features
 
 *   **AI-Powered Event Generation:** Utilizes Google Gemini's `gemini-3-flash-preview` model to interpret user prompts and generate event venue details.
@@ -36,9 +35,12 @@ Louder is a full-stack application designed to revolutionize event planning by l
     *   `images`: Exactly two Unsplash-style image URLs
     *   `description`: Detailed description of why the venue fits the requirements (minimum 500 words).
 *   **Input Validation:** Basic server-side validation ensures prompts are descriptive enough for the AI.
-*   **Client-Side Interface:** A modern, responsive user interface built with React and TailwindCSS for seamless interaction.
+*   **Client-Side Interface:** A modern, responsive user interface built with React and TailwindCSS, featuring:
+    *   Dynamic loading indicators for AI generation and history fetching.
+    *   Interactive example prompts to guide user input.
+    *   Persistent event history with dynamic routing for easy access to past recommendations.
+    *   Collapsible sidebar for history on mobile devices.
 *   **Robust Error Handling:** Includes mechanisms to catch and report errors from the AI model or invalid responses.
-
 ## 🛠️ Tech Stack
 
 ### Client-Side
