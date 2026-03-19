@@ -60,11 +60,11 @@ export default function Dashboard() {
     setLoading(true);
     try {
       const res = await api.post("/api/event", { prompt });
+      setPrompt("");
       const data = res.data.data;
       setResponse(data);
       fetchHistory();
       navigate(`/${data._id}`);
-      setPrompt("");
     } catch (err) {
       console.error(err);
     } finally {
