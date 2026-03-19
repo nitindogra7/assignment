@@ -1,7 +1,8 @@
 import { X, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
+import Loading from "./laoding";
 
-export default function History({ open, setOpen, items }) {
+export default function History({ open, setOpen, items, loading }) {
   return (
     <aside
       className={`fixed md:relative z-50 top-0 left-0 h-full w-64 bg-secondary/95 border-r overflow-scroll border-white/10 p-5 transition-transform duration-300
@@ -26,16 +27,17 @@ export default function History({ open, setOpen, items }) {
       </Link>
 
       <div className="space-y-3 text-sm">
-        {items.map((item, i) => (
-          <Link to={`/${item.id}`} className="m-1" key={i}>
-            <div
-              key={i}
-              className="p-3 rounded-lg bg-white/5 hover:bg-white/10 transition cursor-pointer"
-            >
-              {item.title}
-            </div>
-          </Link>
-        ))}
+        {loading ? (
+          <Loading text="Loading..." />
+        ) : (
+          items.map((item) => (
+            <Link to={`/${item.id}`} className="m-1" key={item.id}>
+              <div className="p-3 rounded-lg bg-white/5 hover:bg-white/10 transition cursor-pointer">
+                {item.title}
+              </div>
+            </Link>
+          ))
+        )}
       </div>
     </aside>
   );

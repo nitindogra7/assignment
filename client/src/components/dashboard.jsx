@@ -4,25 +4,32 @@ import VenueCard from "../components/venueCard";
 import History from "../components/history";
 import api from "../apis/api";
 import { useNavigate, useParams } from "react-router-dom";
+import Loading from "./laoding.jsx";
+
 export default function Dashboard() {
   const [prompt, setPrompt] = useState("");
   const [open, setOpen] = useState(false);
   const [response, setResponse] = useState(null);
   const [historyItems, setHistoryItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [historyLoading, setHistoryLoading] = useState(false);
+
   const navigate = useNavigate();
   const { id } = useParams();
 
   async function fetchHistory() {
+    setHistoryLoading(true);
     try {
       const res = await api.get("/api/history");
       const formatted = res.data.data.map((item) => ({
         id: item._id,
         title: item.name,
       }));
-
       setHistoryItems(formatted);
     } catch (err) {
       console.error(err);
+    } finally {
+      setHistoryLoading(false);
     }
   }
 
@@ -30,13 +37,15 @@ export default function Dashboard() {
     if (!id) return setResponse(null);
     async function fetchData() {
       try {
+        setLoading(true);
         const res = await api.get(`/api/event/${id}`);
         setResponse(res.data.data);
       } catch (err) {
         console.error(err);
+      } finally {
+        setLoading(false);
       }
     }
-
     fetchData();
   }, [id]);
 
@@ -48,16 +57,18 @@ export default function Dashboard() {
     e.preventDefault();
     if (!prompt.trim()) return;
 
+    setLoading(true);
     try {
       const res = await api.post("/api/event", { prompt });
       const data = res.data.data;
-      console.log(data);
-      setResponse(data.data);
+      setResponse(data);
       fetchHistory();
       navigate(`/${data._id}`);
       setPrompt("");
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -85,7 +96,6 @@ export default function Dashboard() {
             AI Event Concierge
           </h1>
         </div>
-
         <p className="hidden md:block text-sm text-gray-400">
           Plan smarter with AI
         </p>
@@ -99,26 +109,34 @@ export default function Dashboard() {
       )}
 
       <div className="flex flex-1 overflow-hidden">
-        <History open={open} setOpen={setOpen} items={historyItems} />
+        <History
+          open={open}
+          setOpen={setOpen}
+          items={historyItems}
+          loading={historyLoading}
+        />
 
         <main className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-10 py-6 space-y-5">
-            <p className="text-sm text-gray-400">
-              Plan corporate offsites with{" "}
-              <span className="text-accent font-medium">
-                AI-powered venue insights
-              </span>
-            </p>
+          {loading ? (
+            <Loading text="Finding best venue for you..." />
+          ) : (
+            <div className="flex-1 overflow-y-auto px-4 sm:px-6 md:px-10 py-6 space-y-5">
+              <p className="text-sm text-gray-400">
+                Plan corporate offsites with{" "}
+                <span className="text-accent font-medium">
+                  AI-powered venue insights
+                </span>
+              </p>
 
-            {!response ? (
-              <h1 className="text-gray-500 text-sm">
-                Type a prompt to generate event plan
-              </h1>
-            ) : (
-              <VenueCard {...venueData} />
-            )}
-          </div>
-
+              {!response ? (
+                <h1 className="text-gray-500 text-sm">
+                  Type a prompt to generate event plan
+                </h1>
+              ) : (
+                <VenueCard {...venueData} />
+              )}
+            </div>
+          )}
           <div className="border-t border-white/10 bg-secondary/80 px-3 sm:px-6 md:px-10 py-3">
             <form
               onSubmit={handleSubmit}
@@ -130,7 +148,6 @@ export default function Dashboard() {
                 placeholder="Describe your event..."
                 className="flex-1 min-w-0 bg-transparent outline-none placeholder-gray-500 text-sm"
               />
-
               <button
                 type="submit"
                 className="shrink-0 px-3 sm:px-4 py-2 rounded-md bg-accent text-white text-sm whitespace-nowrap"
