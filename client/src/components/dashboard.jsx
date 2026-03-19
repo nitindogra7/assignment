@@ -87,13 +87,13 @@ export default function Dashboard() {
 
   return (
     <div className="h-dvh flex flex-col overflow-hidden bg-primary text-gray-200">
-      <nav className="shrink-0 flex items-center justify-between px-4 md:px-8 py-4 border-b border-white/10 bg-secondary/80 backdrop-blur-xl">
+      <nav className="shrink-0 flex items-center justify-between px-4 md:px-8 py-6 border-b border-white/10 bg-secondary/80 backdrop-blur-xl">
         <div className="flex items-center gap-3">
           <button className="md:hidden" onClick={() => setOpen(true)}>
-            <Menu size={20} />
+            <Menu size={25} />
           </button>
-          <h1 className="text-base md:text-lg font-semibold text-white">
-            AI Event Concierge
+          <h1 className="text-xl md:text-xl font-semibold text-white">
+            AI Event <span className="text-accent">Concierge</span>
           </h1>
         </div>
         <p className="hidden md:block text-sm text-gray-400">

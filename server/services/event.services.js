@@ -25,7 +25,7 @@ STRICT RULES:
 - Always return exactly 2 image URLs of that location
 - cost, perPerson, days must be numbers
 - amenities must be an array of strings
-- only one description with minimum words of 500
+- only one description with minimum words of 250
 - divide total cost by people
 
 User request:
